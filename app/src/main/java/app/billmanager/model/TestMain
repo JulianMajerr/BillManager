@@ -1,0 +1,13 @@
+public class TestMain {
+    public static void main(String[] args) {
+        String s = """
+        1 — wa\n!\nz GASTSTATTE\nPREYSIIGSTRASSSE 7791607 MUNCHIER\nTELEFON, 089/447 05 64\nom\nest aM\nTisch # 
+        espe\n2 HELLES O,5L 3,60 € 7,20\nCOLA 0.4L 3,90 € 3,90\n71 PAAR WIENER 3,10 € 3,70\n1 HOUSE 6,10 € 6,10\n‘tel £09)\n
+        Netto HHS 19% € 17,56\n19% MHS 19% € 3,34\nBAR € 20,90\nP frentag 2 2-2018 21:20:81\nHh 000421 0001 Bed.2\n) Gtever-
+        NP.: 817/33729\na) Yielen Dark fur Ihren Besuch\n; fs hat uns Freude Genacht\niM Sie zu bewirten\ni ir freuen uns auf
+         ein\nHit baldiges Wiedersehen\ni\n
+         """;
+        String t = FilteringString.flter(s);
+        System.out.println(t);
+    }
+}

@@ -1,18 +1,59 @@
+import java.util.List;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 public FilteringString {
-    public static String filter(String string) {
-        Pattern pattern = Pattern.complie("
-                (€\s*\d+\.?\d{,2}|
-                \d+\.?\d{,2}\s*€|
-                \d+\.\d\d\D)
-            ")
+    private static final String patternString = "(€\\s*\\d+\\.?\\d{0,2}|" + 
+                "\\d+\\.?\\d{0,2}\\s*€|" +
+                "\\d+\\.\\d\\d\\D)";
+
+    public static Float processString(String string) {
+        List<String> strings = filter(string);
+        List<Float> floats = StringsToFloats(strings);
+        return findMax(floats);
+    }
+
+    private static List<String> filter(String string) {
+        // replace comma with period
+        string = string.replace(",",".");
+        
+        // find all numbers after or before a € symbol or with x.xx signature
+        Pattern pattern = Pattern.compile(patternString);
         Matcher matcher = pattern.matcher(string);
         
-        if (matcher.find()) {
-            return matcher.group(0);
+        List<String> matches = new ArrayList<>();
+        while (matcher.find()) {
+            matches.add(matcher.group(0));
         }
-        else return "";
+        
+        // cleans the numbers of the € sign
+        List<String> numbers = new ArrayList<>();
+        for (String s: matches) {
+            Matcher m = Pattern.compile("\\d+\\.?\\d{0,2}").matcher(s);
+            if (m.find()) {
+                numbers.add(m.group(0));
+            }
+        }
+        return numbers;
+    }
+    
+    private static List<Float> StringsToFloats(List<String> strings) {
+        List<Float> floats = new ArrayList<>();
+        for (String string : strings) {
+            floats.add(Float.parseFloat(string));
+        }
+        return floats;
+    }
+    
+    private static Float findMax(List<Float> floats) {
+        Float max = 0.0f;
+		for (Float f : floats) {
+		    if (f > max) {
+		        max = f;
+		    }
+		}
+		return max;
     }
 }
